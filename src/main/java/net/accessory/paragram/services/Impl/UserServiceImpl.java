@@ -109,4 +109,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             );
         }
     }
+
+    @Override
+    public ResponseEntity<ResponseObject> updateImageProfile(User user) {
+        User getUser = userRepository.findByUsername(user.getUsername());
+        getUser.setAvatar(user.getAvatar());
+        UserDTO userDTO = ConvertUser.convertToDTO(getUser);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("SUCCESS","Image profile changed",userDTO)
+        );
+    }
 }

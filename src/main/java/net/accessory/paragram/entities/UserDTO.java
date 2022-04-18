@@ -22,7 +22,17 @@ public class UserDTO {
 
     private Role role;
 
+    private String birthday;
+
     public UserDTO() {
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public Role getRole() {

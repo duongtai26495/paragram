@@ -13,4 +13,5 @@ public interface UserService {
 
     ResponseEntity<ResponseObject> getProfileByUsername(String username);
 
+    ResponseEntity<ResponseObject> updateImageProfile(User user);
 }

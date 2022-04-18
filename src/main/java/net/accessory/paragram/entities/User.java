@@ -33,12 +33,21 @@ public class User {
 
     private int gender;
 
+    private String birthday;
 
     @ManyToOne()
     @JoinColumn(name = "role", referencedColumnName = "role_id")
     private Role role;
 
     public User() {
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getFull_name() {

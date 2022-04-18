@@ -6,6 +6,7 @@ import net.accessory.paragram.entities.User;
 import net.accessory.paragram.services.Impl.TokenServiceImpl;
 import net.accessory.paragram.services.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,18 +21,19 @@ public class AuthController {
     @Autowired
     private TokenServiceImpl tokenService;
 
-    @PutMapping("edit/{username}")
-    public ResponseEntity<ResponseObject> updateInfo(@PathVariable String username, @RequestBody User user){
-        user.setUsername(username);
+    @PutMapping("edit")
+    public ResponseEntity<ResponseObject> updateInfo(@RequestBody User user){
         return userService.editUserByUsername(user);
+    }
+
+    @PutMapping("change_avt")
+    public ResponseEntity<ResponseObject> updateAvt(@RequestBody User user){
+        return userService.updateImageProfile(user);
     }
 
     @PutMapping("updatepw")
     public ResponseEntity<ResponseObject> updatePassword(@RequestParam("token") String token, @RequestBody User user){
-
         tokenService.insertTokenToBlacklist(new Token(token));
-        user.setUsername(user.getUsername());
-
         return  userService.updatePassword(user);
     }
 }
