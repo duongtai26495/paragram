@@ -25,8 +25,6 @@ public class HomeController {
         return userService.getProfileByUsername(username);
     }
 
-
-
     @GetMapping("images/{fileName:.+}")
     public ResponseEntity<byte[]> readFile (@PathVariable String fileName){
         return imageService.readFile(fileName);
