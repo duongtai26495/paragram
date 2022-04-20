@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -50,15 +51,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                     new ResponseObject("FAILED","This user with email "+user.getEmail()+" already taken!",null)
             );
         }
+        List<Role> roleList = roleService.getAll();
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
         user.setJoined_at(sdf.format(date));
         user.setLast_edited(sdf.format(date));
         user.setActive(1);
+        user.setRole(roleList.get(0));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         UserDTO userDTO = ConvertUser.convertToDTO(userRepository.save(user));
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("SUCCESS","User created",userDTO)
+                new ResponseObject("SUCCESS","Your account create is successful",userDTO)
         );
     }
 
