@@ -14,4 +14,6 @@ public interface UserService {
     ResponseEntity<ResponseObject> getProfileByUsername(String username);
 
     ResponseEntity<ResponseObject> updateImageProfile(User user);
+
+    ResponseEntity<ResponseObject> findListUserByEmailUsername(String email_or_username);
 }

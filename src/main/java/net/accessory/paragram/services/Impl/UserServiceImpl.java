@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -120,6 +121,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         UserDTO userDTO = ConvertUser.convertToDTO(getUser);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("SUCCESS","Image profile changed",userDTO)
+        );
+    }
+
+    @Override
+    public ResponseEntity<ResponseObject> findListUserByEmailUsername(String email_username) {
+        List<User> userList = userRepository.findUserByUsernameOrMail(email_username);
+        if(userList.size() > 0){
+            List<UserDTO> userDTOS = new ArrayList<>();
+            for (User user : userList){
+                if(!user.getUsername().equals(GetCurrentUsername.getUsernameLogin())){
+                    userDTOS.add(ConvertUser.convertToDTO(user));
+                }
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(
+              new ResponseObject("SUCCESS","Founded "+userDTOS.size()+" users",userDTOS)
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("FAILED","User with key word "+email_username+" not found!",null)
         );
     }
 }

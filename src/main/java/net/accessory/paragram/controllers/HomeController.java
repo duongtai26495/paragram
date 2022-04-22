@@ -34,4 +34,9 @@ public class HomeController {
     public ResponseEntity<ResponseObject> register(@RequestBody User user){
         return userService.saveNewUser(user);
     }
+
+    @GetMapping("search/{email}")
+    public ResponseEntity<ResponseObject> searchUsers(@PathVariable String email){
+        return userService.findListUserByEmailUsername(email);
+    }
 }
